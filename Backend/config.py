@@ -6,8 +6,8 @@ Configuration file for Driver Drowsiness Detection System
 IP_CAMERA_URL = "http://10.56.19.74:8080/video"
 
 # Detection Parameters
-EAR_THRESHOLD = 0.25  # Eye Aspect Ratio threshold (0.2-0.3 recommended)
-CONSECUTIVE_FRAMES = 50  # Number of consecutive frames with closed eyes to trigger alert
+EAR_THRESHOLD = 0.21  # Lower threshold for more sensitivity (was 0.25)
+CONSECUTIVE_FRAMES = 20  # Fewer frames needed to trigger alert (was 50)
 
 # Alert Configuration
 ENABLE_AUDIO_ALERT = True  # Enable audio beep alerts

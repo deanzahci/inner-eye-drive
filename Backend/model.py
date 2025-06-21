@@ -212,10 +212,24 @@ class DriverDrowsinessDetector:
                 if avg_ear < self.ear_threshold:
                     self.counter += 1
                 else:
-                    # Eyes are open, reset counter if it was previously closed
+                    # Eyes are open, but only reset counter if they stay open for a few frames
+                    # This prevents resetting on brief eye openings during drowsiness
                     if self.counter >= self.consecutive_frames:
-                        self.total_blinks += 1
-                    self.counter = 0
+                        # If we were in drowsy state, require more frames of open eyes to reset
+                        if self.counter >= self.consecutive_frames * 2:
+                            # Critical drowsiness - require more frames to reset
+                            if self.counter >= self.consecutive_frames * 3:
+                                self.counter = 0  # Reset only after sustained alertness
+                            else:
+                                self.counter = max(self.counter - 1, self.consecutive_frames)  # Gradual reset
+                        else:
+                            # Warning drowsiness - reset after brief opening
+                            self.counter = max(self.counter - 2, 0)
+                    else:
+                        # Normal state - reset normally
+                        if self.counter > 0:
+                            self.total_blinks += 1
+                        self.counter = 0
                 
                 drowsiness_result['consecutive_closed_frames'] = self.counter
                 

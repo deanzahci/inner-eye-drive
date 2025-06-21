@@ -11,16 +11,12 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from model import DriverDrowsinessDetector
+from config import IP_CAMERA_URL, EAR_THRESHOLD, CONSECUTIVE_FRAMES, ENABLE_AUDIO_ALERT, ENABLE_LOGGING
 
 def main():
     """Main function to run the drowsiness detector."""
     print("🚗 Driver Drowsiness Detection System")
     print("=" * 50)
-    
-    # Configuration
-    IP_CAMERA_URL = "http://10.56.19.74:8080/video"
-    EAR_THRESHOLD = 0.25
-    CONSECUTIVE_FRAMES = 50
     
     print(f"📹 IP Camera URL: {IP_CAMERA_URL}")
     print(f"👁️ EAR Threshold: {EAR_THRESHOLD}")
@@ -32,8 +28,8 @@ def main():
         ip_camera_url=IP_CAMERA_URL,
         ear_threshold=EAR_THRESHOLD,
         consecutive_frames=CONSECUTIVE_FRAMES,
-        enable_audio_alert=True,
-        enable_logging=True
+        enable_audio_alert=ENABLE_AUDIO_ALERT,
+        enable_logging=ENABLE_LOGGING
     )
     
     # Start detection
