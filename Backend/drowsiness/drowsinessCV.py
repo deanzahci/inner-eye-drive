@@ -7,6 +7,7 @@ import threading
 from typing import Tuple, List, Optional
 import logging
 from datetime import datetime
+from config import IP_CAMERA_URL, EAR_THRESHOLD, CONSECUTIVE_FRAMES, ENABLE_AUDIO_ALERT, ENABLE_LOGGING, AUDIO_ALERT_COOLDOWN
 
 class DriverDrowsinessDetector:
     """
@@ -15,11 +16,11 @@ class DriverDrowsinessDetector:
     """
     
     def __init__(self, 
-                 ip_camera_url: str = "http://10.56.19.74:8080/video",
-                 ear_threshold: float = 0.25,
-                 consecutive_frames: int = 50,
-                 enable_audio_alert: bool = True,
-                 enable_logging: bool = True):
+                 ip_camera_url: str = IP_CAMERA_URL,
+                 ear_threshold: float = EAR_THRESHOLD,
+                 consecutive_frames: int = CONSECUTIVE_FRAMES,
+                 enable_audio_alert: bool = ENABLE_AUDIO_ALERT,
+                 enable_logging: bool = ENABLE_LOGGING):
         """
         Initialize the drowsiness detector.
         
@@ -85,6 +86,7 @@ class DriverDrowsinessDetector:
         # Audio alert setup
         if self.enable_audio_alert:
             self._setup_audio_alert()
+            self.last_audio_alert_time = 0  # Track last audio alert time for rate limiting
     
     def _setup_logging(self):
         """Setup logging for drowsiness events."""
@@ -109,13 +111,27 @@ class DriverDrowsinessDetector:
             print("Warning: Audio alerts not available on this platform")
     
     def _play_audio_alert(self):
-        """Play audio alert for drowsiness detection."""
+        """Play audio alert for drowsiness detection in a separate thread."""
         if self.enable_audio_alert and self.audio_available:
             try:
-                # Play a beep sound (frequency: 1000Hz, duration: 500ms)
-                self.winsound.Beep(1000, 500)
+                # Rate limiting: only play audio if enough time has passed since last alert
+                current_time = time.time()
+                if current_time - self.last_audio_alert_time >= AUDIO_ALERT_COOLDOWN:
+                    self.last_audio_alert_time = current_time
+                    # Run audio alert in a separate thread to prevent blocking
+                    audio_thread = threading.Thread(target=self._play_beep_sound)
+                    audio_thread.daemon = True  # Make thread daemon so it doesn't block program exit
+                    audio_thread.start()
             except Exception as e:
                 print(f"Audio alert error: {e}")
+    
+    def _play_beep_sound(self):
+        """Play the actual beep sound (runs in separate thread)."""
+        try:
+            # Play a beep sound (frequency: 1000Hz, duration: 500ms)
+            self.winsound.Beep(1000, 500)
+        except Exception as e:
+            print(f"Beep sound error: {e}")
     
     def _log_drowsiness_event(self, ear_value: float, alert_level: str):
         """Log drowsiness detection event."""
@@ -452,11 +468,11 @@ class DriverDrowsinessDetector:
 if __name__ == "__main__":
     # Create detector instance with IP camera URL
     detector = DriverDrowsinessDetector(
-        ip_camera_url="http://10.56.19.74:8080/video",
-        ear_threshold=0.25,
-        consecutive_frames=50,
-        enable_audio_alert=True,
-        enable_logging=True
+        ip_camera_url=IP_CAMERA_URL,
+        ear_threshold=EAR_THRESHOLD,
+        consecutive_frames=CONSECUTIVE_FRAMES,
+        enable_audio_alert=ENABLE_AUDIO_ALERT,
+        enable_logging=ENABLE_LOGGING
     )
     
     # Start real-time detection

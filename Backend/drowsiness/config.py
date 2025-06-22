@@ -25,6 +25,7 @@ GRAPH_HEIGHT = 100  # Height of the EAR graph in pixels
 # Audio Alert Configuration (Windows only)
 AUDIO_FREQUENCY = 1000  # Frequency in Hz for audio alert
 AUDIO_DURATION = 500  # Duration in milliseconds for audio alert
+AUDIO_ALERT_COOLDOWN = 2.0  # Minimum seconds between audio alerts to prevent spam
 
 # Logging Configuration
 LOG_LEVEL = "INFO"  # Logging level (DEBUG, INFO, WARNING, ERROR)

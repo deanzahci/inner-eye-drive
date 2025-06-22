@@ -10,7 +10,7 @@ import os
 # Add current directory to path for imports
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from model import DriverDrowsinessDetector
+from drowsinessCV import DriverDrowsinessDetector
 from config import IP_CAMERA_URL, EAR_THRESHOLD, CONSECUTIVE_FRAMES, ENABLE_AUDIO_ALERT, ENABLE_LOGGING
 
 def main():
