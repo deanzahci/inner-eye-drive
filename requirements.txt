@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 websockets==12.0
@@ -7,3 +8,15 @@ opencv-python==4.8.1.78
 numpy==1.24.3
 Pillow==10.0.1
 pydantic==2.5.0
+=======
+tensorflow>=2.11.0
+opencv-python>=4.5.0
+numpy>=1.21.0
+scikit-learn>=1.0.0
+matplotlib>=3.3.0
+tqdm>=4.62.0
+Pillow>=8.0.0
+mediapipe>=0.10.0
+flask>=2.0.0
+flask-cors>=3.0.0 
+>>>>>>> 8e6b4f74cf8a2c1877b29f27c274c89a5dee5a5d
