@@ -16,7 +16,13 @@ pathspec
 shapely
 ultralytics
 requests
+
+# Deep Learning dependencies
 torch
 torchvision
 numpy
 scipy
+
+# EEG acquisition dependencies
+pyOpenBCI
+pyserial
