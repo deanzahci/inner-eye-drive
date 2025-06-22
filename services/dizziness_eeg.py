@@ -2,6 +2,7 @@ from fastapi import FastAPI, WebSocket
 import asyncio
 import json
 import uvicorn
+import random
 
 app = FastAPI()
 
@@ -39,8 +40,9 @@ async def websocket_endpoint(websocket: WebSocket):
 async def send_counter():
     global counter
     while True:
-        counter += 1
-        data = {"counter": counter}
+        # for testing purposes, we simulate a random state
+        state = random.randint(0, 3)
+        data = {"state": state}
         await manager.broadcast(json.dumps(data))
         await asyncio.sleep(1)
 

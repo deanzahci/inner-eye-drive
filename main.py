@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import webbrowser
+import threading
+import matplotlib.pyplot as plt
 
 is_started = False
 

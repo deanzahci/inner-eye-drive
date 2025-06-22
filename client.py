@@ -34,5 +34,5 @@ async def main():
     
     await asyncio.gather(*tasks)
 
-if __name__ == "__main__":
+if __name__ == "__main__"っっっっっっっd
     asyncio.run(main())
