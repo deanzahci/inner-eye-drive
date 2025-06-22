@@ -5,8 +5,9 @@ websockets>=11.0
 pydantic>=2.0.0
 matplotlib>=3.5.0
 
-# Ultralytics dependencies
+# Computer Vision dependencies
 opencv-python
+mediapipe>=0.10.0
 tqdm
 tensorboard
 addict
@@ -19,4 +20,3 @@ torch
 torchvision
 numpy
 scipy
-torch
