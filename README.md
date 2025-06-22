@@ -1,4 +1,4 @@
-# Inner Eye Drive
+# NeuroDrive
 
 **UC Berkeley AI Hackathon 2025 Project**
 
